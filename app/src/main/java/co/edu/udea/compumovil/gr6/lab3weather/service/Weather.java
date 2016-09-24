@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,32 +22,42 @@ import java.util.concurrent.ExecutionException;
 public class Weather extends Service {
 
     private static final String TAG = "Weather";
-
     private ConnectivityManager estadoConexion;
+    cargarClima clima;
 
     public Weather() {
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        clima = new cargarClima();
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
 
         try {
             while (true) {
-                cargarClima clima = new cargarClima();
+
                 clima.execute(intent);
                 try {
                     String result = clima.get();
-                    Log.e(TAG, "onStartCommand: " + result);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    clima.onPostExecute(result);
+
                 } catch (ExecutionException e) {
                     e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                Thread.sleep(5000);
+                Thread.sleep(10000);
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+
         }
+
+
         return START_REDELIVER_INTENT;
     }
 
@@ -55,19 +66,23 @@ public class Weather extends Service {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            Toast.makeText(getApplicationContext(), "Preparando", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            Toast.makeText(getApplicationContext(), "finalizado " + s, Toast.LENGTH_SHORT).show();
         }
 
         @Override
         protected String doInBackground(Intent... intents) {
+            String webPage = "";
             estadoConexion = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo state = estadoConexion.getActiveNetworkInfo();
+            publishProgress(1);
+
             Intent[] local = intents.clone();
-            String webPage = "";
             if (state != null && state.isConnected()) {
                 String stringUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + local[0].getStringExtra("ciudad") + ",uk&appid=e52e67b48e2ddf365e919f03bc8b1984";
                 URL url = null;
@@ -105,7 +120,25 @@ public class Weather extends Service {
             } else {
                 Log.e(TAG, "handleActionWeather: No hay conexión");
             }
+            /*try{
+                while(true){
+
+                    Thread.sleep(10000);
+                }
+            }catch (InterruptedException e){
+
+            }*/
+
             return webPage;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            Integer[] val = values.clone();
+            if (val[0] == 1) {
+                Toast.makeText(getApplicationContext(), "Corriendo", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

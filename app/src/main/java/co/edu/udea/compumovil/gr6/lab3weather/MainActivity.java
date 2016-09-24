@@ -3,8 +3,9 @@ package co.edu.udea.compumovil.gr6.lab3weather;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
-import co.edu.udea.compumovil.gr6.lab3weather.service.Weather;
+import co.edu.udea.compumovil.gr6.lab3weather.service.WeatherIntent;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,8 +14,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent t = new Intent(this, Weather.class);
+    }
+
+    public void onClick(View e) {
+
+        Intent t = new Intent(getApplicationContext(), WeatherIntent.class);
+        t.setAction("co.edu.udea.compumovil.gr6.lab3weather.service.action.WEATHER");
         t.putExtra("ciudad", "medellin");
-        this.startService(t);
+        startService(t);
     }
 }
