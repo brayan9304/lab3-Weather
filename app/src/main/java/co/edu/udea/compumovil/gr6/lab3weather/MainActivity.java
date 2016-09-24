@@ -11,9 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.view.View;
 
 import co.edu.udea.compumovil.gr6.lab3weather.adapter.SectionPageAdapter;
 import co.edu.udea.compumovil.gr6.lab3weather.webService.Volley;
+import co.edu.udea.compumovil.gr6.lab3weather.service.WeatherIntent;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -36,11 +38,14 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(new SectionPageAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
 
-        /*
-        Intent t = new Intent(this, WeatherService.class);
+    }
+
+    public void onClick(View e) {
+
+        Intent t = new Intent(getApplicationContext(), WeatherIntent.class);
+        t.setAction("co.edu.udea.compumovil.gr6.lab3weather.service.action.WEATHER");
         t.putExtra("ciudad", "medellin");
-        this.startService(t);
-        */
+        startService(t);
     }
     public void aceptar(View v){
         Volley volley = new Volley ("medellin",getBaseContext());

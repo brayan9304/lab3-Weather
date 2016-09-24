@@ -20,6 +20,9 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name=".service.WeatherIntent"
+            android:exported="false"></service>
         <receiver
             android:name=".broadcast.ReceiverBoot"
             android:enabled="true"
