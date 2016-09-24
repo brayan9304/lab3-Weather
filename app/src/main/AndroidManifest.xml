@@ -20,10 +20,6 @@
         </activity>
 
         <service
-            android:name=".service.Weather"
-            android:enabled="true"
-            android:exported="true" />
-        <service
             android:name=".service.WeatherIntent"
             android:exported="false"></service>
     </application>

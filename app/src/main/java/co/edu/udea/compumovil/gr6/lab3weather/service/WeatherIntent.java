@@ -29,7 +29,7 @@ public class WeatherIntent extends IntentService {
     // TODO: Rename parameters
     public static final String EXTRA_CITY = "ciudad";
 
-    private static final String TAG = "Weather";
+    private static final String TAG = "WeatherIntent";
     private ConnectivityManager estadoConexion;
     String webPage = "";
 
