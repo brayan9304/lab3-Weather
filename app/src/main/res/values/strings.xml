@@ -18,4 +18,9 @@
         <item>Paris</item>
         <item>Londres</item>
     </string-array>
+    <string name="clima">Clima</string>
+    <string name="Temperatura">Temperatura</string>
+    <string name="Humedad">Humedad</string>
+    <string name="Descripcion">Descripción</string>
+    <string name="Fecha">Fecha Actual</string>
 </resources>
