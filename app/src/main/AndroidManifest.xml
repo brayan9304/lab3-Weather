@@ -23,8 +23,6 @@
         <service
             android:name=".service.WeatherIntent"
             android:exported="false" />
-
-        <activity android:name=".widget.Widget"></activity>
         
         <receiver android:name=".widget.widgetProvider">
             <intent-filter>
@@ -35,7 +33,6 @@
                 android:resource="@xml/widget_info"
                 />
         </receiver>
-<<<<<<< Updated upstream
         <receiver
             android:name=".broadcast.ReceiverBoot"
             android:enabled="true"
@@ -44,8 +41,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>
             </intent-filter>
         </receiver>
-=======
->>>>>>> Stashed changes
     </application>
 
 </manifest>

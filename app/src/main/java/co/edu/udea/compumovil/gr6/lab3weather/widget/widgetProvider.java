@@ -6,13 +6,13 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.graphics.Bitmap;
 import android.widget.RemoteViews;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Random;
 
+import co.edu.udea.compumovil.gr6.lab3weather.MainActivity;
 import co.edu.udea.compumovil.gr6.lab3weather.R;
 
 /**
@@ -41,6 +41,8 @@ public class widgetProvider extends AppWidgetProvider {
             remoteViews.setTextViewText(R.id.Clima, "El Clima en "+"Medellin");
             remoteViews.setTextViewText(R.id.fecha,fechaActualFormat);
             remoteViews.setTextViewText(R.id.temperatura,"25 °C");
+            Bitmap icon = MainActivity.getBitmapFromAsset(context, "Images/01d.png");
+            remoteViews.setImageViewBitmap(R.id.icon, icon);
             remoteViews.setTextViewText(R.id.humedad,"88%");
 
             // Register an onClickListener
