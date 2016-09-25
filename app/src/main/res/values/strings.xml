@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Lab3Weather</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="action_settings">Action Settings</string>
+    <string name="temperatura">Temperatura</string>
+    <string name="humedad">Humedad</string>
+    <string name="descripcion">Descripcion</string>
+    <string name="fecha_ultima_visualizacion">Fecha ultima visualizacion</string>
+    <string name="selecciona_tu_ciudad">Selecciona tu ciudad</string>
+    <string name="aceptar">ACEPTAR</string>
+    <string name="ciudad">Ciudad</string>
+    <string-array name="cities">
+        <item>Medellin</item>
+        <item>Bogota</item>
+        <item>Boston</item>
+        <item>Newyork</item>
+        <item>Tokyo</item>
+        <item>Paris</item>
+        <item>Londres</item>
+    </string-array>
 </resources>
