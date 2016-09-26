@@ -15,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import co.edu.udea.compumovil.gr6.lab3weather.SingletonRequestQueue;
 import co.edu.udea.compumovil.gr6.lab3weather.Utilities;
 import co.edu.udea.compumovil.gr6.lab3weather.VolleyCallback;
 import co.edu.udea.compumovil.gr6.lab3weather.pojo.Main;
@@ -33,14 +34,19 @@ public class Volley {
     private String URL;
     private String nameCity;
     private Context context;
+    private RequestQueue queue;
 
 
     public Volley(String nameCity, Context context) {
         this.context = context;
         this.nameCity = nameCity;
+        queue = SingletonRequestQueue.getInstance(context).getRequestQueue();
        /* if (nameCity.equalsIgnoreCase("Ibague")) {
             nameCity = "Ibage";
         }*/
+        if (nameCity.equalsIgnoreCase("Santa Marta")) {
+            nameCity = "Santa%20Marta";
+        }
         this.paramsID = "?id=" + Utilities.getIDCity(nameCity) + "&appid=" + API_KEY;
         this.paramsName = "?q=" + nameCity + "&appid=" + API_KEY;
 
@@ -49,7 +55,6 @@ public class Volley {
     public void sendRequestID(final VolleyCallback callback) {
         // Instantiate the RequestQueue.
         URL = BASE_URL + REQUEST + paramsID;
-        RequestQueue queue = com.android.volley.toolbox.Volley.newRequestQueue(context);
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, URL, new Response.Listener<JSONObject>() {
                     @Override
@@ -72,7 +77,8 @@ public class Volley {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, "ERROR Volley!!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+                        error.printStackTrace();
                     }
                 }
                 );
@@ -82,7 +88,6 @@ public class Volley {
     public void sendRequestName(final VolleyCallback callback) {
         // Instantiate the RequestQueue.
         URL = BASE_URL + REQUEST + paramsName;
-        RequestQueue queue = com.android.volley.toolbox.Volley.newRequestQueue(context);
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, URL, new Response.Listener<JSONObject>() {
                     @Override
@@ -105,7 +110,8 @@ public class Volley {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, "ERROR Volley!!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+                        error.printStackTrace();
                     }
                 }
                 );

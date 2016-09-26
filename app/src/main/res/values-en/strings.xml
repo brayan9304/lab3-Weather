@@ -42,4 +42,8 @@
         <item>Buenaventura</item>
     </string-array>
     <string name="weather_In">Weather In </string>
+    <string name="ciudadActual">Actual City:</string>
+    <string name="errorCampRequired">Required Camp</string>
+    <string name="errorNotFound">City Not Found</string>
+    <string name="newCity">New City</string>
 </resources>
