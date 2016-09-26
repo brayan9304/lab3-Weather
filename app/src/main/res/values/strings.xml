@@ -42,4 +42,7 @@
     <string name="Clouds">Nublado</string>
     <string name="weather_In">El Clima en </string>
     <string name="ciudadActual">Ciudad Actual: </string>
+    <string name="errorNotFound">Ciudad No encontrada</string>
+    <string name="errorCampRequired">Campo Requerido</string>
+    <string name="newCity">Nueva ciudad</string>
 </resources>
