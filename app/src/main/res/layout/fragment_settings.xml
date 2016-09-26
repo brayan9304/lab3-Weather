@@ -7,36 +7,51 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <TextView
-        android:id="@+id/selection_city"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="@string/selecciona_tu_ciudad"
-        android:textAlignment="center"
-        android:textSize="25sp" />
-
-    <EditText
-        android:id="@+id/name_city"
-        android:layout_centerHorizontal="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/selection_city"
+        android:text="@string/ciudadActual"
+        android:layout_alignParentStart="true"
         android:layout_marginTop="40dp"
-        android:textSize="30sp"
-        android:hint="@string/ciudad"/>
+        android:layout_marginStart="40dp"
+        android:textSize="25sp"
+        android:id="@+id/ciudad_actual" />
 
-    <android.support.design.widget.FloatingActionButton
+    <Button
         android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/name_city"
+        android:layout_below="@+id/ciudad_select"
         android:layout_marginTop="25dp"
-        android:background="@color/colorPrimary"
         android:text="@string/aceptar"
-        android:textColor="#FFFFFF"
-        android:onClick="aceptar"/>
+        android:background="@color/colorPrimary"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/selection_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/selecciona_tu_ciudad"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:layout_below="@+id/ciudad_actual"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/ciudad_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:singleLine="true"
+        android:inputType="textAutoComplete|textNoSuggestions"
+        android:textSize="30sp"
+        android:hint="@string/ciudad"
+        android:layout_below="@+id/selection_city"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="29dp" />
 
 </RelativeLayout>
 

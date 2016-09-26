@@ -1,10 +1,19 @@
 package co.edu.udea.compumovil.gr6.lab3weather.service;
 
 import android.app.IntentService;
-import android.appwidget.AppWidgetManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Binder;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
+import org.json.JSONObject;
+
+import co.edu.udea.compumovil.gr6.lab3weather.VolleyCallback;
+import co.edu.udea.compumovil.gr6.lab3weather.pojo.Main;
+import co.edu.udea.compumovil.gr6.lab3weather.pojo.Weather;
 import co.edu.udea.compumovil.gr6.lab3weather.webService.Volley;
 
 
@@ -15,16 +24,15 @@ import co.edu.udea.compumovil.gr6.lab3weather.webService.Volley;
  * TODO: Customize class - update intent actions and extra parameters.
  */
 public class WeatherIntent extends IntentService {
-    // TODO: Rename actions, choose action names that describe tasks that this
-    // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
     public static final String ACTION_CHARGEWEATHER = "co.edu.udea.compumovil.gr6.lab3weather.service.action.WEATHER";
-    // TODO: Rename parameters
-    public static final String EXTRA_CITY = "ciudad";
+    public static final String TEMPERATURE = "TEMPERATURE.WEATHERLOOP";
+    public static final String HUMIDITY = "HUMIDITY.WEATHERLOOP";
+    public static final String ICON = "ICON.WEATHERLOOP";
+    public static final String DESCRIPTION = "DESCRIPTION.WEATHERLOOP";
 
     private static final String TAG = "WeatherIntent";
-    //private ConnectivityManager estadoConexion;
-    String webPage = "";
-    Volley chargeWeather;
+    private LocalBinder binderService;
+    private Volley chargeWeather;
 
     public WeatherIntent() {
         super("WeatherIntent");
@@ -32,16 +40,42 @@ public class WeatherIntent extends IntentService {
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+    }
+
+    public void sendResult(String temperatura, String humedad, String icon, String descripcion) {
+        Intent intent = new Intent();
+        intent.setAction(WeatherIntent.ACTION_CHARGEWEATHER);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.putExtra(TEMPERATURE, temperatura);
+        intent.putExtra(HUMIDITY, humedad);
+        intent.putExtra(ICON, icon);
+        intent.putExtra(DESCRIPTION, descripcion);
+        sendBroadcast(intent);
+    }
+
+    @Override
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_CHARGEWEATHER.equals(action)) {
-                final String city = intent.getStringExtra(EXTRA_CITY);
+                SharedPreferences prefs = getSharedPreferences("CiudadActualPref", Context.MODE_PRIVATE);
+                String city = prefs.getString("ciudad", "medellin");
                 handleActionChargeWeather(city);
-                AppWidgetManager widgetMan = AppWidgetManager.getInstance(this.getApplicationContext());
-                int[] allWidgetIds = intent.getIntArrayExtra(widgetMan.EXTRA_APPWIDGET_IDS);
-
             }
+        }
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return binderService;
+    }
+
+    public class LocalBinder extends Binder {
+        public WeatherIntent getService() {
+            return WeatherIntent.this;
         }
     }
 
@@ -52,11 +86,18 @@ public class WeatherIntent extends IntentService {
     private void handleActionChargeWeather(String city) {
         try {
             while (true) {
-                Log.e(TAG, "handleActionChargeWeather: ERRORRORORORORORORO ORODOSDO E");
+                Log.e(TAG, "handleActionChargeWeather: ESTOY CORRIENDO");
                 chargeWeather = new Volley(city, getApplicationContext());
-                chargeWeather.sendRequest();
+                chargeWeather.sendRequest(new VolleyCallback() {
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        Main m = chargeWeather.chargeGSONMain(result);
+                        Weather w = chargeWeather.chargeGSONWeather(result);
+                        sendResult(m.getTemp(), m.getHumidity(), w.getIcon(), w.getDescription());
+                    }
+                });
 
-                Thread.sleep(10000);
+                Thread.sleep(60000);
             }
         } catch (InterruptedException e) {
 

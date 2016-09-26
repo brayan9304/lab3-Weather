@@ -23,24 +23,29 @@
         <service
             android:name=".service.WeatherIntent"
             android:exported="false" />
-        
+
         <receiver android:name=".widget.widgetProvider">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_info"
-                />
+                android:resource="@xml/widget_info" />
         </receiver>
         <receiver
             android:name=".broadcast.ReceiverBoot"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name=".service.UpdateWidget"
+            android:enabled="true"
+            android:exported="false"></service>
     </application>
 
 </manifest>
