@@ -25,7 +25,7 @@ public class SectionPageAdapter extends FragmentPagerAdapter {
             case 1:
                 return new SettingsFragment();
             default:
-                return new  SettingsFragment();
+                return null;
 
         }
 
