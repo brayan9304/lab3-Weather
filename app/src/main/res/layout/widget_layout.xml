@@ -10,7 +10,7 @@
     android:background="@drawable/fondo_widget">
 
         <TextView
-            android:id="@+id/Clima"
+            android:id="@+id/Clima_widget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/Temperatura"
-            android:layout_below="@id/Clima"
+            android:layout_below="@id/Clima_widget"
             android:layout_marginTop="6dp"
             android:layout_marginEnd="30dp"
             android:layout_marginStart="24dp"
@@ -41,7 +41,7 @@
             android:gravity="center"
             android:text="@string/Humedad"
             android:layout_marginTop="6dp"
-            android:layout_below="@id/Clima"
+            android:layout_below="@id/Clima_widget"
             android:layout_toEndOf="@id/temperatura"
             android:textSize="16sp" />
 
@@ -76,5 +76,4 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="14dp"
             android:layout_alignParentEnd="true" />
-
 </RelativeLayout>

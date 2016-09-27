@@ -56,11 +56,12 @@ public class SettingsFragment extends Fragment implements View.OnFocusChangeList
             }
         });
         NumberPicker time = (NumberPicker) fragment.findViewById(R.id.spinner);
-        time.setMinValue(60);
+        time.setMinValue(30);
         time.setMaxValue(3600);
 
         SharedPreferences preferencias = fragment.getContext().getSharedPreferences("CiudadActualPref", Context.MODE_PRIVATE);
         ciudadActual = preferencias.getString("ciudad", "Medellin");
+        time.setValue(preferencias.getInt("timeRefresh", 60));
         TextView actual = (TextView) fragment.findViewById(R.id.ciudad_actual);
         actual.setText(fragment.getResources().getString(R.string.ciudadActual) + " " + ciudadActual);
 

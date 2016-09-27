@@ -1,0 +1,144 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context="co.edu.udea.compumovil.gr6.lab3weather.menu_fragments.WeatherFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:layout_marginTop="112dp"
+                android:id="@+id/icon_weather"
+                android:layout_width="170dp"
+                android:layout_height="160dp"
+                android:src="@mipmap/ic_launcher"
+                android:layout_marginStart="15dp"
+                android:layout_alignParentTop="true" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:text="@string/weather_In"
+                android:textColor="@color/colorPrimaryDark"
+                android:id="@+id/Clima_Ciudad"
+                android:layout_marginTop="42dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <LinearLayout
+                android:layout_width="140dp"
+                android:layout_height="60dp"
+                android:id="@+id/descrition_layout"
+                android:orientation="vertical"
+                android:layout_marginStart="27dp"
+                android:layout_alignTop="@+id/icon_weather"
+                android:layout_toEndOf="@+id/icon_weather"
+                android:layout_marginTop="16dp">
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/descripcion"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:layout_alignBottom="@+id/temperature_layout"
+                    android:layout_toEndOf="@+id/icon_weather" />
+
+                <TextView
+                    android:id="@+id/description_view"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="30dp"
+                    android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="280dp"
+                android:layout_height="60dp"
+                android:id="@+id/date_layout"
+                android:orientation="vertical"
+                android:layout_below="@+id/descrition_layout"
+                android:layout_alignStart="@+id/descrition_layout">
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fecha_ultima_visualizacion"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+                <TextView
+                    android:id="@+id/date_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_below="@+id/date" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="140dp"
+                android:layout_height="60dp"
+                android:id="@+id/temperature_layout"
+                android:orientation="vertical"
+                android:layout_below="@+id/icon_weather"
+                android:layout_toStartOf="@+id/date_layout"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="12dp">
+
+                <TextView
+                    android:id="@+id/temperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/temperatura"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+                <TextView
+                    android:id="@+id/temperature_view"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="140dp"
+                android:layout_height="60dp"
+                android:id="@+id/humidity_layout"
+                android:orientation="vertical"
+                android:layout_marginStart="18dp"
+                android:layout_alignTop="@+id/temperature_layout"
+                android:layout_toEndOf="@+id/descrition_layout">
+
+                <TextView
+                    android:id="@+id/humidity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/humedad"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:layout_below="@+id/icon_weather"
+                    android:layout_alignEnd="@+id/description" />
+
+                <TextView
+                    android:id="@+id/humidity_view"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+</FrameLayout>

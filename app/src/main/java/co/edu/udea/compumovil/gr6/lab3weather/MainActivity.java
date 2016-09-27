@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             if (isMyServiceRunning(WeatherIntent.class)) {
-                Toast.makeText(this, "Esta corriendo", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Esta corriendo", Toast.LENGTH_LONG).show();
 
                 /*Intent intent = new Intent(this, UpdateWidget.class);
                 intent.putExtra(UpdateWidget.FLAG_RETURNED, UpdateWidget.FLAG_ACTIVITY);
@@ -146,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             } else {
-                Toast.makeText(this, "No Esta corriendo", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "No Esta corriendo", Toast.LENGTH_LONG).show();
                 Intent serviceIntent = new Intent(MainActivity.this, WeatherIntent.class);
                 serviceIntent.setAction(WeatherIntent.ACTION_CHARGEWEATHER);
                 startService(serviceIntent);
@@ -161,10 +162,11 @@ public class MainActivity extends AppCompatActivity {
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
-    public void actualizarCiudad(String ciudadAuto) {
+    public void actualizarCiudad(String ciudadAuto, int tiempo) {
         SharedPreferences prefs = getSharedPreferences("CiudadActualPref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("ciudad", ciudadAuto.toString());
+        editor.putInt("timeRefresh", tiempo);
         editor.commit();
         ciudad = prefs.getString("ciudad", "medellin");
         TextView cityWeather = (TextView) findViewById(R.id.Clima_Ciudad);
@@ -172,19 +174,20 @@ public class MainActivity extends AppCompatActivity {
         TextView actual = (TextView) findViewById(R.id.ciudad_actual);
         actual.setText(getResources().getString(R.string.ciudadActual) + " " + ciudad);
         if (isMyServiceRunning(WeatherIntent.class)) {
-            Toast.makeText(this, "IS RUNNING", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "IS RUNNING", Toast.LENGTH_SHORT).show();
             if (mBound) {
                 Log.e(TAG, "actualizarCiudad: " + mBound);
                 mService.stopRunning();
+                Log.e(TAG, "actualizarCiudad: " + mService.getTimeRefresh());
                 mService.setIntentRedelivery(false);
                 mService.stopSelf();
                 mService.onDestroy();
                 unbindService(mConnection);
                 mBound = false;
             }
-        } else {
-            Toast.makeText(this, "IS NOT RUNNING", Toast.LENGTH_SHORT).show();
-        }
+        } /*else {
+            Toast .makeText(this, "IS NOT RUNNING", Toast.LENGTH_SHORT).show();
+        }*/
 
     }
 
@@ -192,13 +195,14 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.submit:
                 AutoCompleteTextView ciudadAuto = (AutoCompleteTextView) findViewById(R.id.ciudad_select);
+                NumberPicker number = (NumberPicker) findViewById(R.id.spinner);
                 ciudadAuto.performValidation();
                 if (!ciudadAuto.getText().toString().equals("")) {
                     Toast.makeText(this, ciudadAuto.getText().toString(), Toast.LENGTH_SHORT).show();
                     String newCity = ciudadAuto.getText().toString();
                     if (!newCity.equalsIgnoreCase(ciudad)) {
                         ciudadAuto.setText("");
-                        actualizarCiudad(newCity);
+                        actualizarCiudad(newCity, number.getValue());
                         Intent serviceIntent = new Intent(MainActivity.this, WeatherIntent.class);
                         serviceIntent.setAction(WeatherIntent.ACTION_CHARGEWEATHER);
                         startService(serviceIntent);
@@ -231,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
         Bitmap icon = MainActivity.getBitmapFromAsset(getApplicationContext(), "Images/" + ico + ".png");
 
         //UPDATE UI
-        Toast.makeText(this, "Recreado", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Recreado", Toast.LENGTH_SHORT).show();
         TextView tempT = (TextView) findViewById(R.id.temperature_view);
         tempT.setText(Utilities.kelvinToCelsius(temp));
         TextView humT = (TextView) findViewById(R.id.humidity_view);
@@ -272,11 +276,11 @@ public class MainActivity extends AppCompatActivity {
                 Bitmap icon = MainActivity.getBitmapFromAsset(getApplicationContext(), "Images/" + ico + ".png");
 
                 //UPDATE UI
-                Toast.makeText(context, temp, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, temp, Toast.LENGTH_SHORT).show();
                 TextView tempT = (TextView) findViewById(R.id.temperature_view);
-                tempT.setText(Utilities.kelvinToCelsius(temp));
+                tempT.setText(Utilities.kelvinToCelsius(temp) + "°C");
                 TextView humT = (TextView) findViewById(R.id.humidity_view);
-                humT.setText(hum);
+                humT.setText(hum + "%");
                 TextView desT = (TextView) findViewById(R.id.description_view);
                 desT.setText(desc);
                 TextView fechT = (TextView) findViewById(R.id.date_view);

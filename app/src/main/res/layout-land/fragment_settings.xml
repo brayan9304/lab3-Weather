@@ -1,0 +1,89 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="co.edu.udea.compumovil.gr6.lab3weather.menu_fragments.SettingsFragment"
+    android:background="@color/colorBackground">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ciudadActual"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:layout_marginTop="40dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="34sp"
+                android:id="@+id/ciudad_actual"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="69dp"
+                android:text="@string/aceptar"
+                android:background="@color/colorPrimary"
+                android:textColor="#FFFFFF"
+                android:onClick="onClick"
+                android:layout_below="@+id/time"
+                android:layout_centerHorizontal="true" />
+
+            <AutoCompleteTextView
+                android:id="@+id/ciudad_select"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:singleLine="true"
+                android:inputType="textAutoComplete|textNoSuggestions"
+                android:textSize="24sp"
+                android:textIsSelectable="false"
+                android:layout_alignBaseline="@+id/selection_city"
+                android:layout_alignBottom="@+id/selection_city"
+                android:layout_alignStart="@+id/submit"
+                android:layout_marginStart="43dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="@string/select_time"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.SearchResult.Title"
+                android:textSize="16sp"
+                android:id="@+id/time"
+                android:layout_marginTop="37dp"
+                android:layout_below="@+id/ciudad_select"
+                android:layout_toStartOf="@+id/ciudad_select"
+                android:layout_marginEnd="16dp" />
+
+            <TextView
+                android:id="@+id/selection_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/selecciona_tu_ciudad"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.SearchResult.Title"
+                android:layout_marginTop="48dp"
+                android:layout_below="@+id/ciudad_actual"
+                android:layout_alignEnd="@+id/time" />
+
+            <NumberPicker
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                android:id="@+id/spinner"
+                android:layout_marginStart="12dp"
+                android:layout_alignTop="@+id/time"
+                android:layout_alignStart="@+id/ciudad_select" />
+
+        </RelativeLayout>
+    </ScrollView>
+</FrameLayout>

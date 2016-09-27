@@ -19,8 +19,7 @@ public class widgetProvider extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         ComponentName thisWidget = new ComponentName(context,widgetProvider.class);
         int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
-        Intent intent = new Intent(context.getApplicationContext(),
-                UpdateWidget.class);
+        Intent intent = new Intent(context, UpdateWidget.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds);
         intent.putExtra(UpdateWidget.FLAG_RETURNED, UpdateWidget.FLAG_WIDGET);
         SharedPreferences preferencias = context.getSharedPreferences("CiudadActualPref", Context.MODE_PRIVATE);
