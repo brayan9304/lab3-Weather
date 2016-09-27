@@ -15,6 +15,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import co.edu.udea.compumovil.gr6.lab3weather.SingletonRequestQueue;
+import co.edu.udea.compumovil.gr6.lab3weather.Utilities;
 import co.edu.udea.compumovil.gr6.lab3weather.VolleyCallback;
 import co.edu.udea.compumovil.gr6.lab3weather.pojo.Main;
 import co.edu.udea.compumovil.gr6.lab3weather.pojo.Weather;
@@ -28,27 +30,31 @@ public class Volley {
     private static final String REQUEST = "/data/2.5/weather";
     private static final String BASE_URL = "http://api.openweathermap.org";
 
-    private String params;
+    private String paramsID, paramsName;
     private String URL;
     private String nameCity;
-    private Main main;
-    private Weather weather;
     private Context context;
+    private RequestQueue queue;
 
 
     public Volley(String nameCity, Context context) {
         this.context = context;
         this.nameCity = nameCity;
-        if (nameCity.equalsIgnoreCase("Ibague")) {
+        queue = SingletonRequestQueue.getInstance(context).getRequestQueue();
+       /* if (nameCity.equalsIgnoreCase("Ibague")) {
             nameCity = "Ibage";
+        }*/
+        if (nameCity.equalsIgnoreCase("Santa Marta")) {
+            nameCity = "Santa%20Marta";
         }
-        this.params = "?q=" + nameCity + "&appid=" + API_KEY;
-        URL = BASE_URL + REQUEST + params;
+        this.paramsID = "?id=" + Utilities.getIDCity(nameCity) + "&appid=" + API_KEY;
+        this.paramsName = "?q=" + nameCity + "&appid=" + API_KEY;
+
     }
 
-    public void sendRequest(final VolleyCallback callback) {
+    public void sendRequestID(final VolleyCallback callback) {
         // Instantiate the RequestQueue.
-        RequestQueue queue = com.android.volley.toolbox.Volley.newRequestQueue(context);
+        URL = BASE_URL + REQUEST + paramsID;
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, URL, new Response.Listener<JSONObject>() {
                     @Override
@@ -56,28 +62,56 @@ public class Volley {
                         JSONObject object = null;
                         try {
                             object = new JSONObject(response.toString());
-                            callback.onSuccess(new JSONObject(response.toString()));
+                            String objectStr = object.toString();
+                            if (!objectStr.contains("Error: Not found city")) {
+                                callback.onSuccess(new JSONObject(response.toString()));
+                            } else {
+                                callback.onError();
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        JSONObject json_main = object.optJSONObject("main");
-                        JSONArray json_weather = object.optJSONArray("weather");
-                        Gson outGson = new Gson();
-                        main = outGson.fromJson(json_main.toString(), Main.class);
-                        try {
-                            weather = outGson.fromJson(json_weather.getJSONObject(0).toString(), Weather.class);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        Toast.makeText(context, weather.getDescription(), Toast.LENGTH_LONG).show();
 
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, "ERROR Volley!!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+                        error.printStackTrace();
+                    }
+                }
+                );
+        queue.add(jsObjRequest);
+    }
+
+    public void sendRequestName(final VolleyCallback callback) {
+        // Instantiate the RequestQueue.
+        URL = BASE_URL + REQUEST + paramsName;
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, URL, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        JSONObject object = null;
+                        try {
+                            object = new JSONObject(response.toString());
+                            String objectStr = object.toString();
+                            if (!objectStr.contains("Error: Not found city")) {
+                                callback.onSuccess(new JSONObject(response.toString()));
+                            } else {
+                                callback.onError();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+                        error.printStackTrace();
                     }
                 }
                 );

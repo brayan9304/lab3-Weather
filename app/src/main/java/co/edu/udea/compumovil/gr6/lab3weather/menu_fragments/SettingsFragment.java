@@ -10,16 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
+import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import co.edu.udea.compumovil.gr6.lab3weather.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SettingsFragment extends Fragment implements View.OnFocusChangeListener, View.OnClickListener {
+public class SettingsFragment extends Fragment implements View.OnFocusChangeListener {
 
     private String[] ciudades;
     View fragment;
@@ -56,13 +55,14 @@ public class SettingsFragment extends Fragment implements View.OnFocusChangeList
                 return null;
             }
         });
+        NumberPicker time = (NumberPicker) fragment.findViewById(R.id.spinner);
+        time.setMinValue(60);
+        time.setMaxValue(3600);
 
         SharedPreferences preferencias = fragment.getContext().getSharedPreferences("CiudadActualPref", Context.MODE_PRIVATE);
         ciudadActual = preferencias.getString("ciudad", "Medellin");
         TextView actual = (TextView) fragment.findViewById(R.id.ciudad_actual);
         actual.setText(fragment.getResources().getString(R.string.ciudadActual) + " " + ciudadActual);
-        Button acept = (Button) fragment.findViewById(R.id.submit);
-        acept.setOnClickListener(this);
 
         return fragment;
     }
@@ -79,23 +79,5 @@ public class SettingsFragment extends Fragment implements View.OnFocusChangeList
         }
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.submit:
-                AutoCompleteTextView ciudad = (AutoCompleteTextView) fragment.findViewById(R.id.ciudad_select);
-                ciudad.performValidation();
-                if (!ciudad.getText().toString().equals("")) {
-                    SharedPreferences prefs = fragment.getContext().getSharedPreferences("CiudadActualPref", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString("ciudad", ciudad.getText().toString());
-                    editor.commit();
-                    ciudadActual = prefs.getString("ciudad", "medellin");
-                    TextView actual = (TextView) fragment.findViewById(R.id.ciudad_actual);
-                    actual.setText(fragment.getResources().getString(R.string.ciudadActual) + " " + ciudadActual);
-                    Toast.makeText(fragment.getContext(), ciudad.getText().toString(), Toast.LENGTH_SHORT).show();
-                }
-                break;
-        }
-    }
+
 }
