@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Lab3Weather</string>
+    <string name="Clouds">Clouds</string>
+    <string name="Descripcion">Descripction</string>
+    <string name="Drizzle">Drizzle</string>
+    <string name="Fecha">Date</string>
+    <string name="Humedad">Humidity</string>
+    <string name="Rain">Rain</string>
+    <string name="Snow">Snow</string>
+    <string name="Temperatura">Temperature</string>
+    <string name="Thunderstorm">ThunderStorm</string>
+    <string name="aceptar">Acept</string>
+    <string name="action_settings">Action Settings</string>
+    <string name="ciudad">City</string>
+    <string name="clear_sky">Clear Sky</string>
+    <string name="clima">Weather</string>
+    <string name="descripcion">Description</string>
+    <string name="fecha_ultima_visualizacion">Last Date</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="humedad">Humidity</string>
+    <string name="selecciona_tu_ciudad">Select a City</string>
+    <string name="temperatura">Temperature</string>
+    <string-array name="cities">
+        <item>Medellin</item>
+        <item>Bogota</item>
+        <item>Cali</item>
+        <item>Popayan</item>
+        <item>Santa Marta</item>
+        <item>Cartagena</item>
+        <item>Mocoa</item>
+        <item>Pasto</item>
+        <item>Tumaco</item>
+        <item>Envigado</item>
+        <item>Barranquilla</item>
+        <item>Pereira</item>
+        <item>Ibague</item>
+        <item>Bucaramanga</item>
+        <item>Bello</item>
+        <item>Neiva</item>
+        <item>Cucuta</item>
+        <item>Buenaventura</item>
+    </string-array>
+    <string name="weather_In">Weather In </string>
+    <string name="ciudadActual">Actual City:</string>
+    <string name="errorCampRequired">Required Camp</string>
+    <string name="errorNotFound">City Not Found</string>
+    <string name="newCity">New City</string>
+</resources>

@@ -15,14 +15,8 @@ public class ReceiverBoot extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // LANZAR SERVICIO
         Intent serviceIntent = new Intent(context, WeatherIntent.class);
-        serviceIntent.setAction("co.edu.udea.compumovil.gr6.lab3weather.service.action.WEATHER");
-        serviceIntent.putExtra("ciudad", "medellin");
+        serviceIntent.setAction(WeatherIntent.ACTION_CHARGEWEATHER);
         context.startService(serviceIntent);
-
-        // LANZAR ACTIVIDAD
-        /*Intent i = new Intent(context, MainActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(i);*/
 
     }
 }
