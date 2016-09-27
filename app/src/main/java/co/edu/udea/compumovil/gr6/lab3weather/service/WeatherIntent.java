@@ -119,7 +119,7 @@ public class WeatherIntent extends IntentService {
                         Main m = chargeWeather.chargeGSONMain(result);
                         Weather w = chargeWeather.chargeGSONWeather(result);
                         sendResult(m.getTemp(), m.getHumidity(), w.getIcon(), w.getDescription(), "");
-                        Toast.makeText(getApplicationContext(), "entro en 1", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Actualizado en 1", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -130,12 +130,12 @@ public class WeatherIntent extends IntentService {
                                 Main m = chargeWeather.chargeGSONMain(result);
                                 Weather w = chargeWeather.chargeGSONWeather(result);
                                 sendResult(m.getTemp(), m.getHumidity(), w.getIcon(), w.getDescription(), "");
-                                Toast.makeText(getApplicationContext(), "entro en 2", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Actualizado en 2", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
                             public void onError() {
-                                Toast.makeText(getApplicationContext(), "entro en 3", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Error en 3", Toast.LENGTH_SHORT).show();
                                 sendResult("", "", "", "", getResources().getString(R.string.errorNotFound));
                             }
                         });

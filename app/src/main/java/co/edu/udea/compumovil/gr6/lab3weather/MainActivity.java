@@ -278,9 +278,9 @@ public class MainActivity extends AppCompatActivity {
                 //UPDATE UI
                 //Toast.makeText(context, temp, Toast.LENGTH_SHORT).show();
                 TextView tempT = (TextView) findViewById(R.id.temperature_view);
-                tempT.setText(Utilities.kelvinToCelsius(temp));
+                tempT.setText(Utilities.kelvinToCelsius(temp) + "°C");
                 TextView humT = (TextView) findViewById(R.id.humidity_view);
-                humT.setText(hum);
+                humT.setText(hum + "%");
                 TextView desT = (TextView) findViewById(R.id.description_view);
                 desT.setText(desc);
                 TextView fechT = (TextView) findViewById(R.id.date_view);
