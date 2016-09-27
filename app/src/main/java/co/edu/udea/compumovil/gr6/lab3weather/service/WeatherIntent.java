@@ -37,15 +37,27 @@ public class WeatherIntent extends IntentService {
     private static final String TAG = "WeatherIntent";
     private Volley chargeWeather;
     private boolean running;
+    private int timeRefresh;
     private final IBinder mBinder = new LocalBinder();
 
     public WeatherIntent() {
         super("WeatherIntent");
         running = true;
+        timeRefresh = 60;
+
         setIntentRedelivery(true);
     }
 
+    public int getTimeRefresh() {
+        return timeRefresh;
+    }
+
+    public void setTimeRefresh(int timeRefresh) {
+        this.timeRefresh = timeRefresh;
+    }
+
     @Override
+
     public void onCreate() {
         Log.e(TAG, "onCreate:");
         super.onCreate();
@@ -70,6 +82,7 @@ public class WeatherIntent extends IntentService {
             if (ACTION_CHARGEWEATHER.equals(action)) {
                 SharedPreferences prefs = getSharedPreferences("CiudadActualPref", Context.MODE_PRIVATE);
                 String city = prefs.getString("ciudad", "medellin");
+                timeRefresh = prefs.getInt("timeRefresh", 60);
                 handleActionChargeWeather(city);
             } else if (STOP_SERVICE.equals(action)) {
                 Log.e(TAG, "en StopSelft: ");
@@ -128,7 +141,7 @@ public class WeatherIntent extends IntentService {
                         });
                     }
                 });
-                Thread.sleep(60000);
+                Thread.sleep(timeRefresh * 1000);
             }
         } catch (InterruptedException e) {
 

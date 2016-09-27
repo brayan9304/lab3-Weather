@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -161,10 +162,11 @@ public class MainActivity extends AppCompatActivity {
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
-    public void actualizarCiudad(String ciudadAuto) {
+    public void actualizarCiudad(String ciudadAuto, int tiempo) {
         SharedPreferences prefs = getSharedPreferences("CiudadActualPref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("ciudad", ciudadAuto.toString());
+        editor.putInt("timeRefresh", tiempo);
         editor.commit();
         ciudad = prefs.getString("ciudad", "medellin");
         TextView cityWeather = (TextView) findViewById(R.id.Clima_Ciudad);
@@ -176,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
             if (mBound) {
                 Log.e(TAG, "actualizarCiudad: " + mBound);
                 mService.stopRunning();
+                Log.e(TAG, "actualizarCiudad: " + mService.getTimeRefresh());
                 mService.setIntentRedelivery(false);
                 mService.stopSelf();
                 mService.onDestroy();
@@ -192,13 +195,14 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.submit:
                 AutoCompleteTextView ciudadAuto = (AutoCompleteTextView) findViewById(R.id.ciudad_select);
+                NumberPicker number = (NumberPicker) findViewById(R.id.spinner);
                 ciudadAuto.performValidation();
                 if (!ciudadAuto.getText().toString().equals("")) {
                     Toast.makeText(this, ciudadAuto.getText().toString(), Toast.LENGTH_SHORT).show();
                     String newCity = ciudadAuto.getText().toString();
                     if (!newCity.equalsIgnoreCase(ciudad)) {
                         ciudadAuto.setText("");
-                        actualizarCiudad(newCity);
+                        actualizarCiudad(newCity, number.getValue());
                         Intent serviceIntent = new Intent(MainActivity.this, WeatherIntent.class);
                         serviceIntent.setAction(WeatherIntent.ACTION_CHARGEWEATHER);
                         startService(serviceIntent);

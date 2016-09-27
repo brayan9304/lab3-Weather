@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -29,7 +30,7 @@ public class UpdateWidget extends Service {
 
     public static final String FLAG_WIDGET = "WIDGET";
     public static final String FLAG_RETURNED = "flag";
-    public static final String FLAG_ACTIVITY = "ACTIVITY";
+    public static final String TAG = "UpdateWidget";
 
     public UpdateWidget() {
     }
@@ -49,7 +50,7 @@ public class UpdateWidget extends Service {
                 if (FLAG_WIDGET.equalsIgnoreCase(intent.getStringExtra(FLAG_RETURNED))) {
                     for (int widgetId : allWidgetIds) {
                         RemoteViews remoteViews = new RemoteViews(getApplicationContext().getPackageName(), R.layout.widget_layout);
-                        remoteViews.setTextViewText(R.id.Clima, getApplication().getString(R.string.weather_In) + " " + city);
+                        remoteViews.setTextViewText(R.id.Clima_widget, getApplication().getString(R.string.weather_In) + " " + city);
                         Calendar fechaActual = Calendar.getInstance();
                         SimpleDateFormat fActual = new SimpleDateFormat("dd-MM-yyyy");
                         String fechaActualFormat = fActual.format(fechaActual.getTime());
@@ -68,6 +69,8 @@ public class UpdateWidget extends Service {
                         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
                                 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                         remoteViews.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
+                        Toast.makeText(getApplicationContext(), "click", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "onSuccess: ");
                         widgetMan.updateAppWidget(widgetId, remoteViews);
                     }
                 }
@@ -83,7 +86,7 @@ public class UpdateWidget extends Service {
                         if (FLAG_WIDGET.equalsIgnoreCase(intent.getStringExtra(FLAG_RETURNED))) {
                             for (int widgetId : allWidgetIds) {
                                 RemoteViews remoteViews = new RemoteViews(getApplicationContext().getPackageName(), R.layout.widget_layout);
-                                remoteViews.setTextViewText(R.id.Clima, getApplication().getString(R.string.weather_In) + " " + city);
+                                remoteViews.setTextViewText(R.id.Clima_widget, getApplication().getString(R.string.weather_In) + " " + city);
                                 Calendar fechaActual = Calendar.getInstance();
                                 SimpleDateFormat fActual = new SimpleDateFormat("dd-MM-yyyy");
                                 String fechaActualFormat = fActual.format(fechaActual.getTime());
@@ -103,6 +106,7 @@ public class UpdateWidget extends Service {
                                         0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                                 remoteViews.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
                                 widgetMan.updateAppWidget(widgetId, remoteViews);
+                                Log.e(TAG, "onSuccess: ");
                             }
                         }
                     }
@@ -110,11 +114,11 @@ public class UpdateWidget extends Service {
                     @Override
                     public void onError() {
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.errorNotFound), Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "onSuccess: ");
                     }
                 });
             }
         });
-
 
         return START_NOT_STICKY;
     }
