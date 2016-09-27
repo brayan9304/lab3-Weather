@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             if (isMyServiceRunning(WeatherIntent.class)) {
-                Toast.makeText(this, "Esta corriendo", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Esta corriendo", Toast.LENGTH_LONG).show();
 
                 /*Intent intent = new Intent(this, UpdateWidget.class);
                 intent.putExtra(UpdateWidget.FLAG_RETURNED, UpdateWidget.FLAG_ACTIVITY);
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             } else {
-                Toast.makeText(this, "No Esta corriendo", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "No Esta corriendo", Toast.LENGTH_LONG).show();
                 Intent serviceIntent = new Intent(MainActivity.this, WeatherIntent.class);
                 serviceIntent.setAction(WeatherIntent.ACTION_CHARGEWEATHER);
                 startService(serviceIntent);
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         TextView actual = (TextView) findViewById(R.id.ciudad_actual);
         actual.setText(getResources().getString(R.string.ciudadActual) + " " + ciudad);
         if (isMyServiceRunning(WeatherIntent.class)) {
-            Toast.makeText(this, "IS RUNNING", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "IS RUNNING", Toast.LENGTH_SHORT).show();
             if (mBound) {
                 Log.e(TAG, "actualizarCiudad: " + mBound);
                 mService.stopRunning();
@@ -185,9 +185,9 @@ public class MainActivity extends AppCompatActivity {
                 unbindService(mConnection);
                 mBound = false;
             }
-        } else {
-            Toast.makeText(this, "IS NOT RUNNING", Toast.LENGTH_SHORT).show();
-        }
+        } /*else {
+            Toast .makeText(this, "IS NOT RUNNING", Toast.LENGTH_SHORT).show();
+        }*/
 
     }
 
@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
         Bitmap icon = MainActivity.getBitmapFromAsset(getApplicationContext(), "Images/" + ico + ".png");
 
         //UPDATE UI
-        Toast.makeText(this, "Recreado", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Recreado", Toast.LENGTH_SHORT).show();
         TextView tempT = (TextView) findViewById(R.id.temperature_view);
         tempT.setText(Utilities.kelvinToCelsius(temp));
         TextView humT = (TextView) findViewById(R.id.humidity_view);
@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
                 Bitmap icon = MainActivity.getBitmapFromAsset(getApplicationContext(), "Images/" + ico + ".png");
 
                 //UPDATE UI
-                Toast.makeText(context, temp, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, temp, Toast.LENGTH_SHORT).show();
                 TextView tempT = (TextView) findViewById(R.id.temperature_view);
                 tempT.setText(Utilities.kelvinToCelsius(temp));
                 TextView humT = (TextView) findViewById(R.id.humidity_view);
