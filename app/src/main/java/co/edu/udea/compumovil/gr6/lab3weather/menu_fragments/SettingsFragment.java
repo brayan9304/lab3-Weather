@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import co.edu.udea.compumovil.gr6.lab3weather.R;
@@ -54,6 +55,9 @@ public class SettingsFragment extends Fragment implements View.OnFocusChangeList
                 return null;
             }
         });
+        NumberPicker time = (NumberPicker) fragment.findViewById(R.id.spinner);
+        time.setMinValue(60);
+        time.setMaxValue(3600);
 
         SharedPreferences preferencias = fragment.getContext().getSharedPreferences("CiudadActualPref", Context.MODE_PRIVATE);
         ciudadActual = preferencias.getString("ciudad", "Medellin");

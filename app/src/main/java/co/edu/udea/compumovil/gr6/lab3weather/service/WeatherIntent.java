@@ -27,6 +27,7 @@ import co.edu.udea.compumovil.gr6.lab3weather.webService.Volley;
  */
 public class WeatherIntent extends IntentService {
     public static final String ACTION_CHARGEWEATHER = "co.edu.udea.compumovil.gr6.lab3weather.service.action.WEATHER";
+    public static final String STOP_SERVICE = "co.edu.udea.compumovil.gr6.lab3weather.service.action.STOP_SERVICE";
     public static final String TEMPERATURE = "TEMPERATURE.WEATHERLOOP";
     public static final String HUMIDITY = "HUMIDITY.WEATHERLOOP";
     public static final String ICON = "ICON.WEATHERLOOP";
@@ -35,14 +36,18 @@ public class WeatherIntent extends IntentService {
 
     private static final String TAG = "WeatherIntent";
     private Volley chargeWeather;
+    private boolean running;
+    private final IBinder mBinder = new LocalBinder();
 
     public WeatherIntent() {
         super("WeatherIntent");
+        running = true;
         setIntentRedelivery(true);
     }
 
     @Override
     public void onCreate() {
+        Log.e(TAG, "onCreate:");
         super.onCreate();
     }
 
@@ -66,6 +71,10 @@ public class WeatherIntent extends IntentService {
                 SharedPreferences prefs = getSharedPreferences("CiudadActualPref", Context.MODE_PRIVATE);
                 String city = prefs.getString("ciudad", "medellin");
                 handleActionChargeWeather(city);
+            } else if (STOP_SERVICE.equals(action)) {
+                Log.e(TAG, "en StopSelft: ");
+                //setIntentRedelivery(false);
+                stopSelf();
             }
         }
     }
@@ -73,7 +82,7 @@ public class WeatherIntent extends IntentService {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return mBinder;
     }
 
     public class LocalBinder extends Binder {
@@ -86,10 +95,10 @@ public class WeatherIntent extends IntentService {
      * Handle action Foo in the provided background thread with the provided
      * parameters.
      */
-    private void handleActionChargeWeather(String city) {
+    public void handleActionChargeWeather(String city) {
         try {
-            while (true) {
-                Log.e(TAG, "handleActionChargeWeather: ESTOY CORRIENDO");
+            while (running) {
+                Log.e(TAG, "handleActionChargeWeather: ESTOY CORRIENDO " + city);
                 chargeWeather = new Volley(city, getApplicationContext());
                 chargeWeather.sendRequestName(new VolleyCallback() {
                     @Override
@@ -126,4 +135,19 @@ public class WeatherIntent extends IntentService {
         }
     }
 
+    public void stopRunning() {
+        running = false;
+        Log.e(TAG, "stopRunning: STOP!!!!");
+    }
+
+    public void startRunning() {
+        running = true;
+        Log.e(TAG, "stopRunning: START!!!!");
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.e(TAG, "onDestroy: ");
+        super.onDestroy();
+    }
 }
